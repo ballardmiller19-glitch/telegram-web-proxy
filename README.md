@@ -2,7 +2,7 @@
 
 一个基于 **Caddy + tproxy-server (Telegram Desktop 官方开源核心) + Docker (MTProxy)** 的 Telegram Web 代理全自动一键部署方案。
 
-该项目将 **HTTPS 流量伪装（前端网页托管）**、**流量智能识别与桥接（tproxy-server）** 以及 **Telegram 底层 MTProto 协议处理（Docker 后端）** 进行了高效解耦，具备极高的隐蔽性、稳定系与抗封锁能力。
+该项目将 **HTTPS 流量伪装（前端网页托管）**、**流量智能识别与桥接（tproxy-server）** 以及 **Telegram 底层 MTProto 协议处理（Docker 后端）** 进行了高效解耦，具备极高的隐蔽性、稳定性与抗封锁能力。
 
 ---
 
@@ -17,33 +17,39 @@
 
 ## 🛠️ 架构设计
 
-[Telegram 客户端 / 浏览器] 
-       │ (Port 443 HTTPS 流量 / 现代暗黑科技风伪装网页)
-       ▼
- ┌───────────┐
- │   Caddy   │ 自动申请并托管 SSL 证书，提供 443 端口 TLS 伪装
- └─────┬─────┘
-       │ (Reverse Proxy: 127.0.0.1:8080)
-       ▼
- ┌───────────┐
- │  tproxy-  │ 智能识别并区分普通网页流量与 Telegram 代理加密流量
- │  server   │ (读取权限严格为 600 的 profiles.json 密钥配置)
- └─────┬─────┘
-       │ (Backend Forward: 127.0.0.1:2398)
-       ▼
- ┌───────────┐
- │  MTProxy  │ Docker 后端容器，处理 Telegram 底层 MTProto 协议握手
- └───────────┘
-✨ 项目特性
-​真·一键部署：脚本会自动拉取系统依赖、从官方Releases 动态下载最新版 tproxy-server 主程序并完成全套配置。
-​零 Go 环境负担：直接使用官方编译好的二进制静态程序，VPS 上无需配置繁琐的 Go 语言开发环境。
-​高颜值伪装主页：内置现代化暗黑科技风（Cloud Edge Gateway）响应式首页，拒绝简陋的默认测试页，具备极佳的视觉隐蔽性。
-​安全随机密钥：通过 openssl 自动生成符合规范的 32 位十六进制安全 Telegram Secret。
-​严格权限控制：自动对包含密钥的 profiles.json 设置 600 权限，保障系统运行合规与安全。
-​🚀 快速开始
-​在一台全新干净的 Linux VPS 上（需拥有公网 IP 且已将域名正确解析至该 VPS），直接在终端执行以下一行命令即可完成全自动部署：
+本项目将流量与服务进行了高效解耦，核心数据流转路径如下：
 
-bash <(curl -sL https://raw.githubusercontent.com/ballardmiller19-glitch/telegram-web-proxy/main/deploy.sh)
+1. **入口层 (Caddy)**
+   * 监听 `443` 端口，自动申请并托管 SSL 证书。
+   * 正常浏览器访问：展示现代化暗黑科技风伪装网页。
+   * Telegram 客户端访问：将流量转发至本地 `127.0.0.1:8080`。
+2. **分流层 (tproxy-server)**
+   * 智能识别并精准区分普通网页流量与 Telegram 代理加密流量。
+   * 严格读取权限为 `600` 的 `profiles.json` 密钥配置。
+3. **后端层 (Docker MTProxy)**
+   * 运行在本地回环 `127.0.0.1:2398`。
+   * 负责处理 Telegram 底层的 MTProto 协议握手。
+
+---
+
+## ✨ 项目特性
+
+* **真·一键部署**：脚本会自动拉取系统依赖、从官方 Releases 动态下载最新版 `tproxy-server` 主程序并完成全套配置。
+* **零 Go 环境负担**：直接使用官方编译好的二进制静态程序，VPS 上无需配置繁琐的 Go 语言开发环境。
+* **高颜值伪装主页**：内置现代化暗黑科技风（Cloud Edge Gateway）响应式首页，拒绝简陋的默认测试页，具备极佳的视觉隐蔽性。
+* **安全随机密钥**：通过 `openssl` 自动生成符合规范的 32 位十六进制安全 Telegram Secret。
+* **严格权限控制**：自动对包含密钥的 `profiles.json` 设置 `600` 权限，保障系统运行合规与安全。
+
+---
+
+## 🚀 快速开始
+
+在一台全新干净的 Linux VPS 上（需拥有公网 IP 且已将域名正确解析至该 VPS），直接在终端执行以下**一行命令**即可完成全自动部署：
+
+```bash
+bash <(curl -sL [https://raw.githubusercontent.com/ballardmiller19-glitch/telegram-web-proxy/main/deploy.sh](https://raw.githubusercontent.com/ballardmiller19-glitch/telegram-web-proxy/main/deploy.sh))
+
+---
 
 交互引导：
 ​运行后，脚本会提示输入：
