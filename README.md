@@ -36,7 +36,7 @@
  │  MTProxy  │ Docker 后端容器，处理 Telegram 底层 MTProto 协议握手
  └───────────┘
 ✨ 项目特性
-​真·一键部署：脚本会自动拉取系统依赖、从官方 Releases 动态下载最新版 tproxy-server 主程序并完成全套配置。
+​真·一键部署：脚本会自动拉取系统依赖、从官方Releases 动态下载最新版 tproxy-server 主程序并完成全套配置。
 ​零 Go 环境负担：直接使用官方编译好的二进制静态程序，VPS 上无需配置繁琐的 Go 语言开发环境。
 ​高颜值伪装主页：内置现代化暗黑科技风（Cloud Edge Gateway）响应式首页，拒绝简陋的默认测试页，具备极佳的视觉隐蔽性。
 ​安全随机密钥：通过 openssl 自动生成符合规范的 32 位十六进制安全 Telegram Secret。
@@ -60,4 +60,4 @@ bash <(curl -sL https://raw.githubusercontent.com/ballardmiller19-glitch/telegra
 ​严格的文件权限：
 ​profiles.json 必须保持 chmod 600 权限，否则 tproxy-server 会因安全校验失败而报错拒绝启动。
 ​后端回环指向：
-​profiles.json 中的 backend 必须指向本地实际监听端口（如 127.0.0.1:2398），切勿指向 443 端口以免造成流量死循环。
+​profiles.json 中的 backend 必须指向本地实际监听端口（如 127.0.0.1:2398），切勿指向443 端口以免造成流量死循环。
