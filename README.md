@@ -42,6 +42,7 @@
 ​严格权限控制：自动对包含密钥的 profiles.json 设置 600 权限，保障系统运行合规与安全。
 ​🚀 快速开始
 ​在一台全新干净的 Linux VPS 上（需拥有公网 IP 且已将域名正确解析至该 VPS），直接在终端执行以下一行命令即可完成全自动部署：
+
 bash <(curl -sL https://raw.githubusercontent.com/ballardmiller19-glitch/telegram-web-proxy/main/deploy.sh)
 
 交互引导：
