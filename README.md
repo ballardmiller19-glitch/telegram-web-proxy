@@ -47,8 +47,8 @@
 在一台全新干净的 Linux VPS 上（需拥有公网 IP 且已将域名正确解析至该 VPS），直接在终端执行以下**一行命令**即可完成全自动部署：
 
 ```bash
-bash <(curl -sL (https://raw.githubusercontent.com/ballardmiller19-glitch/telegram-web-proxy/main/deploy.sh))
-
+bash <(curl -sL https://raw.githubusercontent.com/ballardmiller19-glitch/telegram-web-proxy/main/deploy.sh)
+```
 ---
 
 ### 交互引导
