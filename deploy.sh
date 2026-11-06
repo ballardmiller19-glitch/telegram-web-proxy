@@ -6,7 +6,7 @@ if [ "$EUID" -ne 0 ]; then
   exit 1
 fi
 
-echo "=== Telegram Web 代理全自动部署脚本 ==="
+echo "=== Telegram Web 代理全自动一键部署脚本 ==="
 
 # 1. 交互式输入域名
 read -p "请输入你的域名 (例如 web.joplus.de5.net): " DOMAIN
@@ -21,16 +21,22 @@ BACKEND_PORT=2398
 
 echo "[+] 已自动生成 Telegram Secret: ${SECRET}"
 
-echo "[+] 正在更新系统并安装必要依赖 (Docker, Caddy)..."
-apt update && apt install -y curl git caddy docker.io
+echo "[+] 正在更新系统并安装必要依赖 (curl, caddy, docker)..."
+apt update && apt install -y curl caddy docker.io
 systemctl enable --now docker
 
-# 3. 检查 tproxy-server 二进制文件
+# 3. 自动从 telegramdesktop/tproxy-server 官方 Releases 下载最新版主程序
 if [ ! -f "/usr/local/bin/tproxy-server" ]; then
-  echo "[-] 警告：未在 /usr/local/bin/tproxy-server 找到主程序！"
-  echo "    请确保你已经将 tproxy-server 二进制文件放置到了该路径下，并赋予了执行权限 (chmod +x)。"
-  read -p "是否继续？[y/N]: " continue_flag
-  [[ "$continue_flag" =~ [yY] ]] || exit 1
+  echo "[+] 正在从官方 GitHub 仓库下载 tproxy-server 主程序..."
+  TPROXY_URL="https://github.com/telegramdesktop/tproxy-server/releases/latest/download/tproxy-server-linux-amd64"
+  
+  curl -L -o /usr/local/bin/tproxy-server "$TPROXY_URL"
+  if [ $? -ne 0 ] || [ ! -f "/usr/local/bin/tproxy-server" ]; then
+    echo "[-] 错误：下载 tproxy-server 失败！请检查网络或官方 Release 命名。"
+    exit 1
+  fi
+  chmod +x /usr/local/bin/tproxy-server
+  echo "[+] tproxy-server 下载并授权成功！"
 fi
 
 echo "[+] 创建网页静态目录与配置目录..."
