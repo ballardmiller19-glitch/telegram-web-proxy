@@ -49,7 +49,7 @@ sudo bash deploy.sh
 
 交互引导：
 ​脚本运行后会提示你输入：
-​域名（例如：web.joplus.de5.net）
+​域名
 ​脚本会自动完成剩余所有配置，并在最后在终端打印出专属的 Telegram 代理连接信息。
 ​📱 Telegram 客户端配置
 ​部署完成后，在 Telegram 客户端的代理设置中填入以下信息并启用：
