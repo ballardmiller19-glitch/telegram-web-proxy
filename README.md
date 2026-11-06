@@ -47,11 +47,11 @@
 在一台全新干净的 Linux VPS 上（需拥有公网 IP 且已将域名正确解析至该 VPS），直接在终端执行以下**一行命令**即可完成全自动部署：
 
 ```bash
-bash <(curl -sL [https://raw.githubusercontent.com/ballardmiller19-glitch/telegram-web-proxy/main/deploy.sh](https://raw.githubusercontent.com/ballardmiller19-glitch/telegram-web-proxy/main/deploy.sh))
+bash <(curl -sL (https://raw.githubusercontent.com/ballardmiller19-glitch/telegram-web-proxy/main/deploy.sh))
 
 ---
 
-交互引导：
+##交互引导：
 ​运行后，脚本会提示输入：
 ​请输入你的域名
 ​脚本将自动完成剩余所有操作，并在最后在终端打印出专属的 Telegram 代理连接信息。
